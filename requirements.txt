@@ -1,4 +1,4 @@
 pytest
 memory-profiler
 pandas
-fakers
+faker
