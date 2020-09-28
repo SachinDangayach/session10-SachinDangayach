@@ -1,11 +1,11 @@
 
-# EPAI Session 9 Assignment by Sachin Dangayach
+# EPAI Session 10 Assignment by Sachin Dangayach
 
-This assignment is based on the concepts of "Decorators". We have created different decorators for different tasks of the assignment.
+This assignment is based on the concepts of "Tuples and Named Tuples". We have created different decorators for different tasks of the assignment.
 
 # Below are key functions in session9.py file.
 
-### A) Write a decorator that allows a function to run only on odd seconds
+### A) Use Faker library to get 10000 random profiles. Using namedtuple, calculate the largest blood type, mean-current_location, oldest_person_age and average age (add proper doc-strings)
 
 ### 1. run_at_odd
 function called to create a decorator. func is a non local variable.
@@ -15,7 +15,7 @@ Function check's current time to see if the current time's second's value is odd
 ### 3. @run_at_odd
 Decorator to make a function run only on odd seconds
 
-### B) Write a decorator to add log to any function
+### B) Do the same thing above using a dictionary. Prove that namedtuple is faster
 ### 4. logged
 function called to create a decorator. func is a non local variable for the inner function.
 ### 5. logger
@@ -31,7 +31,7 @@ Print the log of function with details like function name,function documentation
 ### 6 @logged
 Decorator to make add log to a  function
 
-### C) Write a decorator to add authentication to any function
+### C) Create a fake data (you can use Faker for company names) for imaginary stock exchange for top 100 companies (name, symbol, open, high, close). Assign a random weight to all the companies. Calculate and show what value stock market started at, what was the highest value during the day and where did it end. Make sure your open, high, close are not totally random. You can only use namedtuple.
 ### 7. factory_authenticate
 Decorators factory to create a decorator. func is a non local variable for the inner function.
 ### 8. authenticate
