@@ -48,22 +48,22 @@ Finally it compares the timing as based on it prints the winner as well as retur
 ### 12. create_stock_exchange
 function to create fake company profiles and list them on a fake stock exchange.
 Function follows the following steps
-        -1. Function generates the a class  for named tuple and then
+        *1. Function generates the a class  for named tuple and then
         generates a random weights in the named tuple
-        -2. Take the sum of all weights to generate a named tuple of
+        *2. Take the sum of all weights to generate a named tuple of
         normalized weights
-        -3. Create class for named tuple for a company with fields as
+        *3. Create class for named tuple for a company with fields as
         'company_name', 'symbol', 'value', 'open', 'high', 'low', 'close'
-        -4. Company Name: Create named tuple class for stock exchange
-        -5. in loop get the fake company name by faker
-        -6. Symbol: Generate the symbol of company by selection first letter and
+        *4. Company Name: Create named tuple class for stock exchange
+        *5. in loop get the fake company name by faker
+        *6. Symbol: Generate the symbol of company by selection first letter and
         last letters of the company name while randomly choosing the middle
         letter while making sure its not a special character
-        -7. Value: Randomly select the value of company between 3000 to 5000
-        -8. Open: Companies contribution can be found as normalized weight * value
-        -9. High: Open*random value between .8 to 1.3
-        -10. Low: Low can be from .5*open to high value for that company on a given day
-        -11. Close: Close can be any number between Low and High including them
+        *7. Value: Randomly select the value of company between 3000 to 5000
+        *8. Open: Companies contribution can be found as normalized weight * value
+        *9. High: Open multiple with random value between .8 to 1.3
+        *10. Low: Low can be from .5 multiple with open to high value for that company on a given day
+        *11. Close: Close can be any number between Low and High including them
 
 ### 13. stock_exchange_details
 Calculate the days open, low, high and closing for stock exchange. Loops through the tuples of top 100 companies listed in exchange and returns on calculation, the day_open, day_high, day_low and day_close value for exchange
