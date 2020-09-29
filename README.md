@@ -1,136 +1,102 @@
 
 # EPAI Session 10 Assignment by Sachin Dangayach
 
-This assignment is based on the concepts of "Tuples and Named Tuples". We have created different decorators for different tasks of the assignment.
+This assignment is based on the concepts of "Named Tuples".  We have used the timer decorator created in earlier session to time the function calls. We have session10.pynb file to check the logs of functions
 
-# Below are key functions in session9.py file.
+# Below are key functions in session10.py file.
 
 ### A) Use Faker library to get 10000 random profiles. Using namedtuple, calculate the largest blood type, mean-current_location, oldest_person_age and average age (add proper doc-strings)
 
-### 1. run_at_odd
-function called to create a decorator. func is a non local variable.
+### 1.create_fake_library_by_namedtuple
+Generates a database of fake profiles based on user input.
+for example create_fake_library_by_namedtuple(10) will return named tuple of 10 named tuple of fake profiles
 
-### 2. execute
-Function check's current time to see if the current time's second's value is odd or not, if odd, then only function is executed otherwise not For eg: after decorating add function, if add is called at time seconds value is 21 (odd), function will be executed while if second's value is 20(even) it will not execute add function with 1,2 as input for 1st time, the output will be: add has been called 1 times, Result: 1 + 2 = 3
-### 3. @run_at_odd
-Decorator to make a function run only on odd seconds
+### 2. largest_bg
+Return the most common blood group of fake profiles stored as named tuple of named tuple
 
-### B) Do the same thing above using a dictionary. Prove that namedtuple is faster
-### 4. logged
-function called to create a decorator. func is a non local variable for the inner function.
-### 5. logger
-Print the log of function with details like function name,function documentation, execution time, count of times function is called and function call representation with arguments as string. Also, update the global func_log list which is be used to verify the logging functionality For eg: after decorating add function, if add(1,2) is called, apart from result, log will be showcased like-
-   ---  Log for function: add  ---
-   Function documentation: add the input variables
-   Function called at: 2020-09-20 20:40:08.767335+00:00
-   Total time to execute: 1.9999998812636477e-07
-   Function called: 1 times
-   Call function add(1,2)
-   Result-
-   3
-### 6 @logged
-Decorator to make add log to a  function
+### 3. mean_current_location
+Return the mean current location ( average lat and long co-ordinates) of fake profiles stored in named tuple of named tuple
 
-### C) Create a fake data (you can use Faker for company names) for imaginary stock exchange for top 100 companies (name, symbol, open, high, close). Assign a random weight to all the companies. Calculate and show what value stock market started at, what was the highest value during the day and where did it end. Make sure your open, high, close are not totally random. You can only use namedtuple.
-### 7. factory_authenticate
-Decorators factory to create a decorator. func is a non local variable for the inner function.
-### 8. authenticate
-Creates decorator through factory method for authenticating a function
-### 9. inner
-Call a function after it is authenticated. Otherwise display error For eg: on calling add function, if the user name is correct, then only function will result the output else it will show an error message
-### 8. @factory_authenticate
-Decorator to make add user authentication to a  function
+### 4. oldest_person_age
+Return the oldest person's age of fake profiles stored in named tuple of named tuple
 
-### D) Decorator to add time to any function
-### 10.     timer_factory
-decorator factory to create a decorator.
-### 11. op_countr
-Calls function add, mul or div with input parameters and update a global dictionary "operation" having add, mul and div as its keys while calling the respective function. Function call updates the user specific dictionary and output the result showing how many times this function has been called.
-It also calls respective function(non local variable fn) with given input and returns the output string.
-For eg: on calling closure for add function with 1,2 as input for 1st time, the output will be: add has been called 1 times, Result: 1 + 2 = 3
-### 12. time_it
-Function to create a decorator called to decorate a function by timing it.
-### 13. timer
-Function check's how much time it takes on an average for n runs to execute a function. For eg: after decorating fact function for repeat = 100, we will get how much time it takes for fact function to run for any given inputs on an average for 100 runs. In this case we will get -  fact(5)
-Function fact takes average run time of 2.3930000179461787e-06 for 100 iterations
-### 14. @timer_factory
-Decorator to make add timer to a  function
+### 5. average_age
+Return the oldest person's age of fake profiles stored in named tuple of named tuple
 
-### E) Decorator Provides privilege access (has 4 parameters, based on privileges (high, mid, low, no), gives access to all 4, 3, 2 or 1 params)
+### B) Use Faker library to get 10000 random profiles. Using dictionary, calculate the largest blood type, mean-current_location, oldest_person_age and average age (add proper doc-strings)
+### 6. create_fake_library_by_dict
+Generates a database of fake profiles based on user input for example        create_fake_library_by_dict(10) will return dictionary of 10 dictionary of fake profiles
 
-### 15. prev_access
-Get the records of four columns of the df based on the user 4 level of access privilege for the user. If privilege is 1, user can see only Name. if privilege is 2, user can see Name and age and like this if access if 4, user can see all four columns
-### 16. access_data
- Provides the user data access based on its privilege
-### 17. @ prev_access
-Decorator to make privilege based call for a function
+### 7. largest_bg_dict
+Return the most common blood group of fake profiles stored in dictionary of dictionary
 
-### F) Htmlize code using inbuilt singledispatch
-Singledispatch creates three things, a registry, a register and a dispatch function. We have used the singledispatch from functools to create htmlizer.
-### 18. htmlize
-convert in html format for object type
-### 19. htmlize_integral_numbers
-convert in html format for int type
-### 20. htmlize_real
-convert in html format for float type
-### 21. htmlize_decimal
-convert in html format for decimal type
-### 22. htmlize_sequence
-convert in html format for list anf tuple type
-### 23. htmlize_dict
-convert in html format for dict type
-### 24. htmlize_str
- convert in html format for str type
-# Below are test cases functions in test_session9.py file.
+### 8. mean_current_location_dict
+Return the mean current location ( average lat and long co-ordinates) of fake profiles stored in dictionary of dictionary
 
-### 25. test_add_is_decorator :
+### 9. oldest_person_age_dict
+Return the oldest person's age of fake profiles stored in dictionary of dictionary
+
+### 10. average_age_dict
+Return the oldest person's age of fake profiles stored in dictionary of dictionary
+
+### 11. compare_time
+function to compare the performance of named tuple vs dict. Function takes input as fake profiles library implemented as named tuple of named tuple and dictionary of dictionary. For named tuples based libraries, it runs and time 100 iterations of function named largest_bg, mean_current_location, oldest_person_age,  average_age and add it to a timer variable. It repeates the same for library implemented as dictionary of dictionary while timing the 100 times execution of each of largest_bg, mean_current_location,        oldest_person_age, average_age and storing it in another timer variable.
+Finally it compares the timing as based on it prints the winner as well as returns both timer variables
+
+### C) Create a fake data (you can use Faker for company names) for imaginary stock exchange for top 100 companies (name, symbol, open, high, close). Assign a random weight to all the companies. Calculate and show what value stock market started at, what was the highest value during the day and where did it end. Make sure your open, high, close are not totally random.
+
+### 12. create_stock_exchange
+function to create fake company profiles and list them on a fake stock exchange.
+Function follows the following steps
+        1. Function generates the a class  for named tuple and then
+        generates a random weights in the named tuple
+        2. Take the sum of all weights to generate a named tuple of
+        normalized weights
+        3. Create class for named tuple for a company with fields as
+        'company_name', 'symbol', 'value', 'open', 'high', 'low', 'close'
+        4. Company Name: Create named tuple class for stock exchange
+        5. in loop get the fake company name by faker
+        6. Symbol: Generate the symbol of company by selection first letter and
+        last letters of the company name while randomly choosing the middle
+        letter while making sure its not a special character
+        7. Value: Randomly select the value of company between 3000 to 5000
+        8. Open: Companies contribution can be found as normalized weight * value
+        9. High: Open*random value between .8 to 1.3
+        10. Low: Low can be from .5*open to high value for that company on a given day
+        11. Close: Close can be any number between Low and High including them
+
+### 13. stock_exchange_details
+Calculate the days open, low, high and closing for stock exchange. Loops through the tuples of top 100 companies listed in exchange and returns on calculation, the day_open, day_high, day_low and day_close value for exchange
+
+# Below are test cases functions in test_session10.py file.
+
+## Check for coding standards-
+
+## 1. test_readme_exists :
 Test for readme exists
 
-### 26. test_readme_contents :
+## 2. test_readme_contents :
 Test for readme contents are more than 500 words
 
-### 27. test_readme_proper_description :
+## 3. test_readme_proper_description :
 Test for all important functions/class described well in your README.md file
 
-### 28. test_readme_file_for_formatting :
+## 4. test_readme_file_for_formatting :
 Test for readme formatting
 
-### 29. test_indentations :
+## 5. test_indentations :
 Test for source code formatting. No tabs but four spaces are used for indentation
 
-### 30. test_function_name_had_cap_letters :
+## 6. test_function_name_had_cap_letters :
 Test for no function is with capitals in source code
 
-### 31. test_add_is_decorator:
-Test to check the docstr_len_check is a closure
+# Test cases for assignments
 
-### 32. test_decorator_has_called_func_docstring :
-Test to check the decorator has doc string
+## 7. test_compare_perforamce:
+Test to check the performance of named tuple is better than dictionary
 
-### 33.test_decorator_called_at_odd_sec:
-Test to check the decorator changed function to be called at odd seconds only
+## 8. test_doc_string:
+Test to check the doc string exists
 
-### 34. test_add_logged_is_decorator :
-Test to check the add has closure attribute which is required to get Decorator
-
-### 35. test_add_logged :
-Test to check the add_logged is working and its logs are generated we are also inserting the logs in global log list(func_log) to check whether the count for log is increasing when the function is called
-
-### 36. test_authenticate :
-check the decorator @authenticate is validating user credentials before calling a function
-
-### 37. test_timer :
-Create a decorator, which when added to any function can execute it given number of times and return the results and gives back the average runtime based for given number of runs
-
-### 38. test_privilege_access :
-Create a decorator, which when added to any function allows to let the user access a database based on the privilege user has got. To demonstrate the functionality, we have used a user class to create 4 different users with different privileges, 1 being lowest and 4 being highest. We have created a pandas dataframe to store data of four patients with details of  name, age, bood_group and Covid_Infected.
-Rules ->
-    The user named HOD, created with privilege 4 should be able to access all 4 columns
-    The user named Doctor, created with privilege 3 should be able to access first 3 columns as we don't want doctor to be biased against covid patients
-    The user named nurse, created with privilege 2 should be able to access first 2 columns only
-    The user named accountant, created with privilege 1 should be able to access first column to get the patients id for billing purpose
-    we have access_records which is decorated with privilege access and it returns only the data based on users privilege
-
-### 39. test_singledispatch :
-singledispatch creates three things, a registry, a register and a dispatch function. We have used the singledispatch from functools to create htmlizer. We will test the htmlizer is converting the code properly or not.
-to check the valid update for counters in user specific dictionary for alternative approach
+## 9. test_stock_exchange :
+Test to check the stock exchange numbers are correct

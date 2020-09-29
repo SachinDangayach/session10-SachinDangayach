@@ -13,7 +13,7 @@ from decimal import Decimal
 import pandas as pd
 
 README_CONTENT_CHECK_FOR = [ # not needed to check as these are not required to be named similar
-    '@timer_factory',
+    'stock_exchange_details',
 ]
 
 def test_readme_exists():
@@ -60,166 +60,41 @@ def test_function_name_had_cap_letter():
 
 ############################## session10 Validations#############################
 
-# TODO: 1 Test the function to run only on odd seconds
-def test_add_is_decorator():
+# TODO: 1 Test the named tuple performance is better than dictionary
+def test_compare_perforamce():
     """
-    Test to check the add has closure attribute which is required to get Decorator
+    Test to check the performance of namedtuple is better than dictinary
     """
-    assert hasattr(session10.add, '__closure__'), "add is not a valid closure"
+    # Create fake profiles library by named tuples
+    faker_db = session10.create_fake_library_by_namedtuple(100)
 
-def test_decorator_has_called_func_docstring():
+    # Create fake profiles library through dictionary
+    faker_db_dict = session10.create_fake_library_by_dict(100)
+
+    ntup, dict = session10.compare_time(faker_db, faker_db_dict)
+
+    assert ntup<dict, "Implementation is not correct"
+
+# TODO: 2 Test the named tuple performance is better than dictionary
+def test_doc_string():
     """
-    Test to check the decorator has doc string
+    Test to check the doc string exists
     """
-    assert session10.__doc__, "Decorator is missing original function documentation"
+    # Create fake profiles library by named tuples
+    faker_db = session10.create_fake_library_by_namedtuple(10)
 
-def test_decorator_called_at_odd_sec():
+    assert len(faker_db.__doc__) > 0 , "Doc string is missing"
+
+# TODO: 2 Test the stock exchange details like high should be greater than low etc.
+def test_stock_exchange():
     """
-    Test to check the decorator changed function to be called at odd seconds only
+    Test to check the stock exchange numbers are correct
     """
-    for _ in range(1000):
-     result = session10.add(1)
+    # create fake company profiles and list
+    stock_exchange = session10.create_stock_exchange(num_of_listed_comp = 100)
 
-    assert result != 1000, "add is not only called at odd seconds"
+    # Stock market details
+    day_open,day_high,day_low,day_close = session10.stock_exchange_details(stock_exchange)
 
-# TODO: 2 Test Decorator to add log to any function
-def test_add_logged_is_decorator():
-    """
-    Test to check the add has closure attribute which is required to get Decorator
-    """
-    assert hasattr(session10.add_logged, '__closure__'), "add_logged is not a valid decorator"
-
-def test_add_logged():
-    """
-    Test to check the add_logged is working and its logs are generated
-    we are also inserting the logs in global log list(func_log) to check whether the
-    count for log is increasing when the function is called
-    """
-    for _ in range(5):
-        session10.add_logged(1,2)
-
-    assert len(session10.func_log)==5, "add_logged is not generating logs as expected"
-
-
-# TODO: 3 Test decorator to add authentication to any function.
-def test_authenticate():
-    """
-    check the decorator @authenticate is validating user credentials before
-    calling a function
-    """
-# We will use class named users to generate a user object with previlage and password.
-    user = session10.Users('test1','password1','1')
-    # we have created two users objects and used their correct and incorrect
-    # credentials to create to decorated functions named
-    @session10.factory_authenticate(user.get_password(),'a1bc')
-    def add_auth_f(*args):
-        """add the input variables"""
-        return(sum(args))
-    @session10.factory_authenticate(user.get_password(),'password1')
-    def add_auth_p(*args):
-        """add the input variables"""
-        return(sum(args))
-
-    # incorrect user password
-    with pytest.raises(ValueError, match=r".*are not authenticated to use'*"):
-        result1 = add_auth_f(1,2)
-
-    # correct user password
-    result2 = add_auth_p(1,2)
-    assert result2 == 3, "Decorater to add authentication is not working as expected"
-
-# TODO: 4 Test decorator to add timer to any function.
-def test_timer():
-    """
-    Create a decorator, which when added to any function can execute it given number
-    of times and return the results and gives back the average runtime based for given
-    number of runs
-    """
-    n = random.randint(1,10)
-    @session10.timer_factory(n)
-    def fact(n:int)->int:
-        """Factorial of a numer"""
-        from operator import mul
-        from functools import reduce
-        return reduce(mul, range(1, n+1))
-
-    result, avg_time = fact(5)
-    assert avg_time != 0 and result == 120, "Decorater to add timer function is not working as expected"
-
-
-# TODO: 5 Test decorator to Provides privilege access (has 4 parameters, based on privileges (high, mid, low, no), gives access to all 4, 3, 2 or 1 params)
-def test_privilege_access():
-    """
-    Create a decorator, which when added to any function allows to let the user access
-    a database based on the previlege user has got.
-    To demonstarate the functionality, we have used a user class to create 4 different
-    users with different privileges, 1 being lowest and 4 being highest.
-
-    We have created a pandas dataframe to store data of four patients with details of
-    name, age, bood_group and Covid_Infected.
-    Rules ->
-    The user named HOD, created with previlage 4 should be able to access all 4 columns
-    The user named Doctor, created with previlage 3 should be able to access first 3 columns as we don't want doctor to be baised against covid patients
-    The user named nurse, created with previlage 2 should be able to access first 2 columns only
-    The user named accountant, created with previlage 1 should be able to access first column to get the patients id for billing purpose
-
-    we have access_records which is decorated with privilege access and it returns only the data based on users privilege
-    """
-    # Health data of patients
-    data = {'Name':['Tom', 'nick', 'krish', 'jack'], 'Age':[20, 21, 19, 18], 'Blood_Group':['O+','B+','A-','B-'],'Covid_Infected':['Y','N','N','Y']}
-    # Create DataFrame of data of patients
-    df = pd.DataFrame(data)
-
-    # Create decorated function
-    @session10.prev_access
-    def access_records(user,df):
-        """
-        print and return records of dataframe
-        Inputs:
-            df: dataframe
-        """
-        print(df)
-        return df
-
-    # Correct credentials
-    accountant = session10.Users('abc1','password1','1')
-    acc_df = access_records(accountant,df)
-    assert acc_df.shape[1] == 1, "Decorater to add previlage function is not working as expected"
-
-    nurse = session10.Users('abc2','password2','2')
-    acc_df1 = access_records(nurse,df)
-    assert acc_df1.shape[1] == 2, "Decorater to add previlage function is not working as expected"
-
-    doctor = session10.Users('abc3','password3','3')
-    acc_df2 = access_records(doctor,df)
-    assert acc_df2.shape[1] == 3, "Decorater to add previlage function is not working as expected"
-
-    hod = session10.Users('abc3','password4','4')
-    acc_df3 = access_records(hod,df)
-    assert acc_df3.shape[1] == 4, "Decorater to add previlage function is not working as expected"
-
-    # Incorrect credentials
-    acc_fraud = session10.Users('abc5','password101','1')
-    acc_df_fraud = access_records(acc_fraud,df)
-    assert acc_df_fraud.shape[1] != 2, "Decorater to add previlage function is not working as expected"
-
-
-# TODO: 5 Test singledispatch to htmlize the code
-def test_singledispatch():
-    """
-    singledispatch creates three things, a registry, a register and a dispatch fucntion.
-    We have used the singledispatch from functools to create htmlizer. We will test the
-    htmlizer is converting the code properly or not
-    """
-
-    # for int
-    assert session10.htmlize(1) == '1(<i>0x1</i>)', 'singledispatch to htmlize is not working as expected for Integral'
-    # for float
-    assert session10.htmlize(1.1) == '1.1', 'singledispatch to htmlize is not working as expected for float types'
-    # for list  and tuple
-    assert session10.htmlize((1,2)) == '<ul>\n<li>1(<i>0x1</i>)</li>\n<li>2(<i>0x2</i>)</li>\n</ul>', 'singledispatch to htmlize is not working as expected for list and tuple'
-    # for Decimal
-    a = Decimal('1.4535')
-    assert session10.htmlize(1.4535) == '1.45', 'singledispatch to htmlize is not working as expected for decimal type'
-    # for dict
-    assert session10.htmlize({'a':1,'b':2}) == '<ul>\n<li>a=1</li>\n<li>b=2</li>\n</ul>', 'singledispatch to htmlize is not working as expected for dic types'
+    assert day_low<=day_high, "Implementation of Stock Exchange is not correct"
+    assert day_close<=day_high, "Implementation of Stock Exchange is not correct"

@@ -6,6 +6,7 @@ from datetime import datetime
 import random
 import math
 import re
+import pandas as pd
 
 # - Utility Code -
 # TODO: Timer decorator to time functions with number of iterations
@@ -84,9 +85,6 @@ def create_fake_library_by_namedtuple(num):
     # Create faker instance
     fake = Faker()
 
-    # Get a dummy fake profile
-    dummy = fake.profile()
-
     # Create a namedtuple class
     FakePrf = namedtuple('FakePrf', dummy.keys())
 
@@ -95,6 +93,9 @@ def create_fake_library_by_namedtuple(num):
 
     # Create a namedtuple class for fake profiles db
     FakePrfDb = namedtuple('FakePrfDb', 'FakePrf_0')
+
+    # Overwrite doc string
+    FakePrfDb.__doc__ = "Represents database of random fake profile"
 
     for i in range(num):
         # get a fake profile
@@ -109,9 +110,6 @@ def create_fake_library_by_namedtuple(num):
             faker_db = FakePrfDb(fake_profile)
         else:
             FakePrfDb = namedtuple('FakePrfDb', FakePrfDb._fields + ('FakePrf_'+str(i),))
-
-            # Overwrite doc string
-            FakePrfDb.__doc__ = f"Represents database of {num} random fake profile"
 
             faker_db = FakePrfDb._make(faker_db + (fake_profile,))
 
@@ -195,9 +193,6 @@ def create_fake_library_by_dict(num):
         will return dictionary of 10 dictionary
         of fake profiles
     """
-
-    # Create faker instance
-    fake = Faker()
 
     # Create a fake profile DB dictonary object
     faker_db_dict = {}
@@ -351,7 +346,7 @@ def create_stock_exchange(num_of_listed_comp = 100):
 
     # Functionality:
         Function follows the following steps
-        1. Function generates the a class  for named tuple and then
+        1. Function generates the a class  for named tupleand then
         generates a random weights in the named tuple
         2. Take the sum of all weights to generate a named tuple of
         normalised weights
@@ -361,7 +356,7 @@ def create_stock_exchange(num_of_listed_comp = 100):
         5. in loop get the fake company name by faker
         6. Symbol: Generate the symbol of company by selection first letter and
         last letters of the company name while randomly chosing the middle
-        letter while making sure its not a special charcater
+        letter while making sure its not a special charater
         7. Value: Randomly select the value of company between 3000 to 5000
         8. Open: Companies contribution can be found as normalized weight * value
         9. High: Open*random value between .8 to 1.3
@@ -424,7 +419,7 @@ def create_stock_exchange(num_of_listed_comp = 100):
 
     return(stock_exchange)
 
-# TODO 3.1: Calculate the days open, low, high and closing for stock exchange
+# TODO 3.1: Calulate the days open, low, high and closing for stock exchange
 def stock_exchange_details(stock_exchange):
     """
     Returns stock exchange details
